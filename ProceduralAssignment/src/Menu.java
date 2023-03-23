@@ -32,10 +32,9 @@ public class Menu {
 
     private static void readGrades() {
         for (int i = 0; i < studentScores.length; i++) {
-            System.out.printf("Enter the score for the %d%s student: ", i + 1, getOrdinalSuffix(i + 1));
-            int score = IOScanner.scanInt();
+            int score = IOScanner.scanInt(String.format("Enter the score for the %d%s student: ", i + 1, getOrdinalSuffix(i + 1)));
             if (GradeOperations.isInvalidGrade(score)) {
-                i--; // Decrement the counter to retry input for the same student
+                i--;
             } else {
                 studentScores[i] = score;
             }

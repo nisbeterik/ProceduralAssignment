@@ -4,8 +4,7 @@ public class HashtagOperations {
     }
 
     public static void collectAndPrintHashtags() {
-        System.out.println("Enter your message:");
-        String typedMessage = IOScanner.scanLine();
+        String typedMessage = IOScanner.scanLine("Enter your message:");
         String[] messageArray = convertStringInputToArray(typedMessage);
         String[] hashtags = findHashtags(messageArray);
         printHashtags(hashtags);
