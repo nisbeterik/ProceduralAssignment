@@ -1,89 +1,83 @@
 public class GradeOperations {
-    public static int isHighestScore(int [] scores) {
+
+    public static int findHighestScore(int[] scores) {
         int highest = scores[0];
-        for (int h = 0; h < scores.length; h++) {
-            if (scores[h] > highest) {
-                highest = scores[h];
+        for (int score : scores) {
+            if (score > highest) {
+                highest = score;
             }
         }
         return highest;
     }
 
-
-
-    public static int isSecondLowestScore(int [] scores) {
-        int temp;
-        for (int a = 0; a < scores.length; a++) {                      //loop to find second lowest value
-            for (int b = (a + 1); b < scores.length; b++) {     //compares two values and sorts them based on condition
-                if (scores[a] < scores[b]) {                            // source: https://www.javatpoint.com/java-program-to-find-second-smallest-number-in-an-array
-                    temp = scores[a];
-                    scores[a] = scores[b];
-                    scores[b] = temp;
-                }
+    public static int findLowestScore(int[] scores) {
+        int lowest = scores[0];
+        for (int score : scores) {
+            if (score < lowest) {
+                lowest = score;
             }
         }
-        return scores[scores.length-2];
+        return lowest;
     }
 
-    public static int isSecondHighestScore(int [] scores) {
-        int temp;
-        for (int i = 0; i < scores.length; i++) {
-            for (int j = (i + 1); j < scores.length; j++) {
-                if (scores[i] > scores[j]) {                            //inversed greater than operator from lowest
-                    temp = scores[i];
-                    scores[i] = scores[j];
-                    scores[j] = temp;
-                }
+    public static int findSecondHighestScore(int[] scores) {
+        int highest = findHighestScore(scores);
+        int secondHighest = Integer.MIN_VALUE;
+        for (int score : scores) {
+            if (score > secondHighest && score < highest) {
+                secondHighest = score;
             }
-        } return scores[scores.length-2];
+        }
+        return secondHighest;
     }
 
-    public static int isLowestScore(int [] scores) {
-        int lowest= scores[0];
-        for (int y = 0; y < scores.length; y++) {      //loop to find lowest value
-            if (scores[y] < lowest) {                   //if current value in array is lower than value stored in lowest
-                lowest = scores[y];                     //then replace value in lowest with current value checked in array
+    public static int findSecondLowestScore(int[] scores) {
+        int lowest = findLowestScore(scores);
+        int secondLowest = Integer.MAX_VALUE;
+        for (int score : scores) {
+            if (score < secondLowest && score > lowest) {
+                secondLowest = score;
             }
-
-        } return lowest;
+        }
+        return secondLowest;
     }
-    public static void highestScoreAndItsPosition(int[] scores) {
-        int highest = isHighestScore(scores);
+
+    public static void printHighestScoreAndItsPosition(int[] scores) {
+        int highest = findHighestScore(scores);
         int position = 0;
-        for (int i = 0; i < scores.length; i++) { //loop finding the index for the largest number
-            if (scores[i] == highest) {              //if current value in array is equal to largest
-                position = (i + 1);             //then assign array position +1 because array starts at 0
+        for (int i = 0; i < scores.length; i++) {
+            if (scores[i] == highest) {
+                position = i + 1;
                 break;
             }
         }
-        switch (position) {         //switch to print proper ordinal indicators
-            case 1:
-                System.out.printf("The highest score is " + highest + " and belongs to the %dst student", position);
-                break;
-            case 2:
-                System.out.printf("The highest score is " + highest + " and belongs to the %dnd student", position);
-                break;
-
-            case 3:
-                System.out.printf("The highest score is " + highest + " and belongs to the %drd student", position);
-                break;
-
-            case 4:
-            case 5:
-            case 6:
-            case 7:
-                System.out.printf("The highest score is " + highest + " and belongs to the %dth student", position);
-                break;
-
-
-        }
-        System.out.println("\n");
-
+        System.out.printf("The highest score is %d and belongs to the %d%s student\n\n", highest, position, Menu.getOrdinalSuffix(position));
     }
-    public static boolean wrongGradeInput(int scoreInput) {
-        if(scoreInput<0 || scoreInput>100) {
+
+    public static boolean isInvalidGrade(int scoreInput) {
+        if (scoreInput < 0 || scoreInput > 100) {
             System.out.println("Error - Input out of bound. Score can only be between 0  and 100.");
             return true;
-        } return false;
+        }
+        return false;
+    }
+
+    public static void printMean(int[] scores) {
+        double sum = 0;
+        for (int score : scores) {
+            sum += score;
+        }
+        double mean = sum / scores.length;
+        System.out.printf("The mean of the entered scores is: %.2f\n\n", mean);
+    }
+
+    public static void printTwoHighestAndTwoLowestScores(int[] scores) {
+        int highest = findHighestScore(scores);
+        int secondHighest = findSecondHighestScore(scores);
+        int lowest = findLowestScore(scores);
+        int secondLowest = findSecondLowestScore(scores);
+
+        System.out.printf("Two highest scores: %d, %d\n", highest, secondHighest);
+        System.out.printf("Two lowest scores: %d, %d\n\n", lowest, secondLowest);
     }
 }
